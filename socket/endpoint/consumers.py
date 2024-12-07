@@ -2,7 +2,9 @@ import asyncio, json, time, random
 from channels.generic.websocket import AsyncWebsocketConsumer
 from get_crypto_dict import get_random_dict
 
+# MarketConsumer class is django's framework for websockets
 class MarketConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
         # Accept the WebSocket connection
         await self.accept()
@@ -25,7 +27,7 @@ class MarketConsumer(AsyncWebsocketConsumer):
                 "channel": "rates",
             }))
 
-            # Periodically send updates
+            # Periodically send updates by calling script from get_crypto_dict
             while True:
                 try:
                     update_message = json.dumps(get_random_dict())
