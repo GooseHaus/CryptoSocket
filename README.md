@@ -105,3 +105,4 @@ This repository implements a **Django Channels**-based cryptocurrency rates serv
 - Improve error handling and resilience of the WebSocket server.
 - Add test cases.
 - Expand support for USDT, QCAD, ETHW. 
+- Create models to store/update asset price values
