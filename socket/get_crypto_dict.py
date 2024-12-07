@@ -1,6 +1,6 @@
 import requests, time, random
 
-# List of assets. Unsupported as of Dec 6th: USDT, QCAD, ETHW. Workaround below. 
+# List of assets. Unsupported as of Dec 7th 2024: USDT, QCAD, ETHW. Workaround below. 
 assets = [
     "BTC", "ETH", "LTC", "XRP", "BCH", "USDC", "XMR", "XLM",
     "USDT", "QCAD", "DOGE", "LINK", "MATIC", "UNI", "COMP", "AAVE", "DAI",
@@ -62,6 +62,7 @@ def fetch_spot_price(symbol):
     return spot_price
 
 # Function to fetch 24-hour price change from Binance API
+# Assumption: 'change' is the magnitude vs the %
 def fetch_24hr_change(symbol):
     """Fetch the 24-hour price change for a given symbol from Binance."""
     url = f"https://api.binance.com/api/v3/ticker/24hr?symbol={symbol}USDT"
@@ -72,7 +73,7 @@ def fetch_24hr_change(symbol):
         price_change = round(float(price_change) * get_usd_to_cad_rate(), 2)
     return price_change
 
-# Function to build the dict for the websocket to eventually deliver
+# Function to build the dict for the websocket to deliver
 def build_dict(symbol):
     crypto_dict = {
         "channel": "rates",
@@ -106,7 +107,7 @@ def get_random_dict():
                 "ask": num, 
                 "spot": num, 
                 "change": 0
-                # change should be the delta in the exchange rate in the last 24hrs
+                # change _should_ be the delta in the exchange rate in the last 24hrs
             }
         }
     
@@ -126,9 +127,9 @@ def get_random_dict():
         }
     
     # workaround for ETHW, this one needs updating more than the others
-    # synthesized from manual update of spot price, last update Dec 6th
+    # synthesized from manual update of spot price, last update Dec 7th 2024
     elif random_asset == "ETHW":
-        spot = 5.02
+        spot = 5.14 * get_usd_to_cad_rate()
         return {
             "channel": "rates",
             "event": "data",
@@ -137,7 +138,7 @@ def get_random_dict():
                 "timestamp": timestamp(), 
                 "bid": round(random.uniform(spot*0.9, spot*1.1), 2), 
                 "ask": round(random.uniform(spot*0.9, spot*1.1), 2), 
-                "spot": round(spot * get_usd_to_cad_rate(), 2), 
+                "spot": round(spot, 2), 
                 "change": round(random.uniform(spot*0.5, spot*1.5), 2)
             }
         }

@@ -1,5 +1,6 @@
 import uvicorn
 
+# Simplified script for running the uvicorn server using ssl
 if __name__ == "__main__":
     uvicorn.run(
         "cryptoSocket.asgi:application",
