@@ -55,11 +55,14 @@ This repository implements a **Django Channels**-based cryptocurrency rates serv
 
 ### Connecting a WebSocket Client
 
-1. Run the client to connect to the WebSocket server and subscribe to cryptocurrency rates (available in the `socket` directory):
+1. Run the client to connect to the WebSocket server and subscribe to cryptocurrency rates. This will need to be done in a new shell window running in the same virtual environment:
 
    ```bash
-   # Open a second terminal/cmd prompt window
+   # Open a second shell window and move to the repo folder
    cd <repository_folder>
+
+   # Start the virtual environment and run the client
+   source venv/bin/activate
    cd socket
    python run_client.py
    ```
