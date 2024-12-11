@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
+from .models import Coin
 
-# Placeholder functionality
 def index(request):
-    return HttpResponse("Hello world. You are at index")
+    coins = Coin.objects.values()
+    return JsonResponse(list(coins), safe=False)
