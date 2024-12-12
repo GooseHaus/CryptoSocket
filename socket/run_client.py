@@ -21,6 +21,8 @@ async def connect_to_websocket():
         while True:
             response = await websocket.recv()
             print("Response from server:", response)
+
+            # removed following chunk in moving it to the endpoint/consumers.py file, clean up later
             """"
             # Pull data from the websocket's json
             data = json.loads(response)

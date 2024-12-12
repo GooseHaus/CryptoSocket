@@ -23,6 +23,32 @@ document.body.appendChild(table);
 
 const ratesEl = document.getElementById("rates");
 
+// Function to populate the table with initial data
+async function fetchInitialData() {
+    try {
+        const response = await fetch("http://localhost:8000/api/coins/");
+        const data = await response.json();
+
+        data.forEach((coin) => {
+            const row = `
+                <tr data-symbol="${coin.symbol_text}">
+                    <td>${coin.symbol_text}</td>
+                    <td>${coin.bid_price}</td>
+                    <td>${coin.ask_price}</td>
+                    <td>${coin.spot_price}</td>
+                    <td>${coin.price_change_24hr}</td>
+                </tr>
+            `;
+            ratesEl.insertAdjacentHTML("beforeend", row);
+        });
+    } catch (error) {
+        console.error("Error fetching initial data:", error);
+    }
+}
+
+// Fetch initial data
+fetchInitialData();
+
 // Set up WebSocket connection
 const socket = new WebSocket("wss://localhost:8000/markets/ws/");
 
@@ -35,37 +61,37 @@ socket.onopen = () => {
 };
 
 socket.onmessage = (event) => {
-  const message = JSON.parse(event.data);
+    const message = JSON.parse(event.data);
 
-  if (message.channel === "rates" && message.event === "data") {
-      const data = message.data;
+    if (message.channel === "rates" && message.event === "data") {
+        const data = message.data;
 
-      // Check if a row with the symbol already exists
-      let existingRow = document.querySelector(`#rates tr[data-symbol="${data.symbol}"]`);
+        // Check if a row with the symbol already exists
+        let existingRow = document.querySelector(`#rates tr[data-symbol="${data.symbol}"]`);
 
-      if (existingRow) {
-          // Update the existing row
-          existingRow.innerHTML = `
-              <td>${data.symbol}</td>
-              <td>${data.bid}</td>
-              <td>${data.ask}</td>
-              <td>${data.spot}</td>
-              <td>${data.change}</td>
-          `;
-      } else {
-          // Append a new row if the symbol is new
-          const row = `
-              <tr data-symbol="${data.symbol}">
-                  <td>${data.symbol}</td>
-                  <td>${data.bid}</td>
-                  <td>${data.ask}</td>
-                  <td>${data.spot}</td>
-                  <td>${data.change}</td>
-              </tr>
-          `;
-          ratesEl.insertAdjacentHTML("beforeend", row);
-      }
-  }
+        if (existingRow) {
+            // Update the existing row
+            existingRow.innerHTML = `
+                <td>${data.symbol}</td>
+                <td>${data.bid}</td>
+                <td>${data.ask}</td>
+                <td>${data.spot}</td>
+                <td>${data.change}</td>
+            `;
+        } else {
+            // Append a new row if the symbol is new
+            const row = `
+                <tr data-symbol="${data.symbol}">
+                    <td>${data.symbol}</td>
+                    <td>${data.bid}</td>
+                    <td>${data.ask}</td>
+                    <td>${data.spot}</td>
+                    <td>${data.change}</td>
+                </tr>
+            `;
+            ratesEl.insertAdjacentHTML("beforeend", row);
+        }
+    }
 };
 
 socket.onerror = (error) => {
