@@ -11,7 +11,6 @@ table.innerHTML = `
     <thead>
         <tr>
             <th>Symbol</th>
-            <th>Timestamp</th>
             <th>Bid</th>
             <th>Ask</th>
             <th>Spot</th>
@@ -36,24 +35,37 @@ socket.onopen = () => {
 };
 
 socket.onmessage = (event) => {
-    const message = JSON.parse(event.data);
+  const message = JSON.parse(event.data);
 
-    if (message.channel === "rates" && message.event === "data") {
-        const data = message.data;
+  if (message.channel === "rates" && message.event === "data") {
+      const data = message.data;
 
-        // Append new row to the table
-        const row = `
-            <tr>
-                <td>${data.symbol}</td>
-                <td>${new Date(data.timestamp).toLocaleTimeString()}</td>
-                <td>${data.bid}</td>
-                <td>${data.ask}</td>
-                <td>${data.spot}</td>
-                <td>${data.change}</td>
-            </tr>
-        `;
-        ratesEl.insertAdjacentHTML("beforeend", row);
-    }
+      // Check if a row with the symbol already exists
+      let existingRow = document.querySelector(`#rates tr[data-symbol="${data.symbol}"]`);
+
+      if (existingRow) {
+          // Update the existing row
+          existingRow.innerHTML = `
+              <td>${data.symbol}</td>
+              <td>${data.bid}</td>
+              <td>${data.ask}</td>
+              <td>${data.spot}</td>
+              <td>${data.change}</td>
+          `;
+      } else {
+          // Append a new row if the symbol is new
+          const row = `
+              <tr data-symbol="${data.symbol}">
+                  <td>${data.symbol}</td>
+                  <td>${data.bid}</td>
+                  <td>${data.ask}</td>
+                  <td>${data.spot}</td>
+                  <td>${data.change}</td>
+              </tr>
+          `;
+          ratesEl.insertAdjacentHTML("beforeend", row);
+      }
+  }
 };
 
 socket.onerror = (error) => {
