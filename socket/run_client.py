@@ -21,7 +21,7 @@ async def connect_to_websocket():
         while True:
             response = await websocket.recv()
             print("Response from server:", response)
-
+            """"
             # Pull data from the websocket's json
             data = json.loads(response)
             if "data" in data:
@@ -43,5 +43,6 @@ async def connect_to_websocket():
                         "price_change_24hr": Decimal(change),
                     }
                 )
+                """
 
 asyncio.run(connect_to_websocket())
