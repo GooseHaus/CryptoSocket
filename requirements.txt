@@ -5,6 +5,8 @@ channels==4.2.0
 charset-normalizer==3.4.0
 click==8.1.7
 Django==5.1.4
+django-cors-headers==4.6.0
+djangorestframework==3.15.2
 h11==0.14.0
 idna==3.10
 pycparser==2.22
