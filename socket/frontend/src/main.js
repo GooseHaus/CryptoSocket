@@ -26,7 +26,7 @@ const ratesEl = document.getElementById("rates");
 // Function to populate the table with initial data
 async function fetchInitialData() {
     try {
-        const response = await fetch("http://localhost:8000/api/coins/");
+        const response = await fetch("https://localhost:8000/api/coins/");
         const data = await response.json();
 
         data.forEach((coin) => {

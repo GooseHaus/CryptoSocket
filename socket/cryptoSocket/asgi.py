@@ -22,5 +22,5 @@ application = ProtocolTypeRouter({
         URLRouter(
             endpoint.routing.websocket_urlpatterns
         )
-    )
+    ),
 })
