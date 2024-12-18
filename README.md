@@ -1,4 +1,4 @@
-
+# DEPRECIATED BRANCH, remains for observational purposes only. Does not function. 
 # Cryptocurrency WebSocket Service with Django Channels
 
 This repository implements a **Django Channels**-based cryptocurrency rates server that provides real-time updates for various cryptocurrency assets in CAD (Canadian Dollars). The system leverages Django for enhanced scalability and flexibility, including WebSocket support for real-time cryptocurrency rates.
