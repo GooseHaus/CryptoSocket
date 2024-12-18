@@ -1,6 +1,6 @@
 import requests, time, random
 
-# List of assets. Unsupported as of Dec 7th 2024: USDT, QCAD, ETHW. Workaround below. 
+# List of assets. Unsupported as of Dec 18th 2024: USDT, QCAD, ETHW. Workaround below. 
 assets = [
     "BTC", "ETH", "LTC", "XRP", "BCH", "USDC", "XMR", "XLM",
     "USDT", "QCAD", "DOGE", "LINK", "MATIC", "UNI", "COMP", "AAVE", "DAI",
@@ -127,9 +127,9 @@ def get_random_dict():
         }
     
     # workaround for ETHW, this one needs updating more than the others
-    # synthesized from manual update of spot price, last update Dec 7th 2024
+    # synthesized from manual update of spot price, last update Dec 18th 2024
     elif random_asset == "ETHW":
-        spot = 5.14 * get_usd_to_cad_rate()
+        spot = 3.66 * get_usd_to_cad_rate()
         return {
             "channel": "rates",
             "event": "data",
