@@ -44,9 +44,14 @@ This repository implements a **Django Channels**-based cryptocurrency rates serv
    pip install -r requirements.txt
    ```
 
-4. Start the backend server (WebSocket + REST API):
+4. Setup the database to store coin values:
    ```bash
    cd socket
+   python manage.py migrate
+   ```
+
+4. Start the backend server (WebSocket + REST API):
+   ```bash
    python run_server.py
    ```
 
