@@ -34,6 +34,7 @@ const App: React.FC = () => {
 
         socket.onmessage = (event) => {
             const message = JSON.parse(event.data);
+            console.log("Message received:", message);
             if (message.channel === "rates" && message.event === "data") {
                 const newCoin: Coin = message.data;
 
