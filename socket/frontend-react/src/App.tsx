@@ -9,19 +9,19 @@ const App: React.FC = () => {
 
     // Fetch initial data from the REST API
     useEffect(() => {
-    const fetchInitialData = async () => {
-        try {
-            const response = await fetch("https://localhost:8000/api/coins/");
-            const data: Coin[] = await response.json();
-            console.log("Initial data fetched:", data);
-            setCoins(data); // Populate the table with initial data
-        } catch (error) {
-            console.error("Error fetching initial data:", error);
-        }
-    };
+        const fetchInitialData = async () => {
+            try {
+                const response = await fetch("https://localhost:8000/api/coins/");
+                const data: Coin[] = await response.json();
+                console.log("Initial data fetched:", data);
+                setCoins(data); // Populate the table with initial data
+            } catch (error) {
+                console.error("Error fetching initial data:", error);
+            }
+        };
 
-    fetchInitialData();
-}, []); // Empty dependency ensures it runs only once
+        fetchInitialData();
+    }, []); // Empty dependency ensures it runs only once
 
     // WebSocket connection for live updates
     useEffect(() => {
