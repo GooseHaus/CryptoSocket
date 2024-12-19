@@ -20,6 +20,8 @@ def get_usd_to_cad_rate():
     data = response.json()
     if 'rates' in data and 'CAD' in data['rates']:
         return data['rates']['CAD']
+    else:
+        return 1.4
 
 # Function to wrap each asset in the asset_CAD format required
 def wrap_symbol(symbol):
